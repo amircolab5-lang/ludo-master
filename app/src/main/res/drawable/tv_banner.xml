@@ -1,0 +1,49 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180">
+    <path
+        android:pathData="M0,0h320v180h-320z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="0"
+                android:startY="0"
+                android:endX="320"
+                android:endY="180"
+                android:type="linear">
+                <item android:offset="0" android:color="#0b1a30" />
+                <item android:offset="0.5" android:color="#1e3a8a" />
+                <item android:offset="1" android:color="#0284c7" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- Dice Outer -->
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M130,55 h60 a10,10 0 0 1 10,10 v50 a10,10 0 0 1 -10,10 h-60 a10,10 0 0 1 -10,-10 v-50 a10,10 0 0 1 10,-10 Z" />
+    <!-- Dice Pips (5) -->
+    <path
+        android:fillColor="#ef4444"
+        android:pathData="M142,67m-5,0a5,5 0 1,0 10,0a5,5 0 1,0 -10,0" />
+    <path
+        android:fillColor="#ef4444"
+        android:pathData="M178,67m-5,0a5,5 0 1,0 10,0a5,5 0 1,0 -10,0" />
+    <path
+        android:fillColor="#ef4444"
+        android:pathData="M160,90m-6,0a6,6 0 1,0 12,0a6,6 0 1,0 -12,0" />
+    <path
+        android:fillColor="#ef4444"
+        android:pathData="M142,113m-5,0a5,5 0 1,0 10,0a5,5 0 1,0 -10,0" />
+    <path
+        android:fillColor="#ef4444"
+        android:pathData="M178,113m-5,0a5,5 0 1,0 10,0a5,5 0 1,0 -10,0" />
+    <!-- Gold accent stars -->
+    <path
+        android:fillColor="#fbbf24"
+        android:pathData="M80,90l4,8 9,1 -7,6 2,9 -8,-4 -8,4 2,-9 -7,-6 9,-1z" />
+    <path
+        android:fillColor="#fbbf24"
+        android:pathData="M240,90l4,8 9,1 -7,6 2,9 -8,-4 -8,4 2,-9 -7,-6 9,-1z" />
+</vector>
