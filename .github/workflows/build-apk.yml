@@ -1,0 +1,70 @@
+name: Android Build APK
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Ludo Master APK
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Accept Android SDK Licenses & Install Platform 36
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses || true
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36" "build-tools;35.0.0" || true
+
+      - name: Setup Environment and Keystore
+        run: |
+          chmod +x gradlew
+          
+          if [ -f ".env.example" ]; then
+            cp .env.example .env
+          else
+            touch .env
+          fi
+          
+          if [ -f "debug.keystore.base64" ]; then
+            base64 -d debug.keystore.base64 > debug.keystore 2>/dev/null || base64 --decode debug.keystore.base64 > debug.keystore 2>/dev/null || true
+          fi
+          
+          if [ ! -s "debug.keystore" ]; then
+            echo "Generating fresh debug keystore..."
+            rm -f debug.keystore
+            keytool -genkeypair -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US" -noprompt
+          fi
+
+      - name: Build RELEASE APK with Gradle
+        run: |
+          ./gradlew assembleRelease -x test -x lint --no-daemon --stacktrace --no-configuration-cache
+
+      - name: Clean up previous workflow runs & artifacts
+        uses: Mattraks/delete-workflow-runs@v2
+        continue-on-error: true
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          retain_days: 0
+          keep_minimum_runs: 1
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ludo-master-apk-release
+          path: app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+          retention-days: 3

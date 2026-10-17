@@ -1,0 +1,6 @@
+{
+  "name": "Ludo Master",
+  "description": "3D Ludo board game featuring Three.js 3D pawns and dice, Firebase authentication and database, gesture pan/zoom board controls, high contrast shiny board, and store-ready IAP.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
